@@ -2,6 +2,8 @@
 import scrapy
 from unidecode import unidecode
 
+import json
+
 class needyDivi(scrapy.Spider):
     name = 'needyDivi'
     start_urls = ['https://www.telelistas.net/mg/divinopolis/associacoes+beneficentes']
@@ -23,7 +25,10 @@ class needyDivi(scrapy.Spider):
 
     
       filteredList = filter(self.myFunc, my_list)
-      print(self.Remove(filteredList)) 
+      print(self.Remove(filteredList))
+
+      with open('data.json', 'w') as outfile:
+        json.dump(self.Remove(filteredList), outfile) 
 
     def myFunc(self, x):
       if x['name'] is None or x['address'] is None:
