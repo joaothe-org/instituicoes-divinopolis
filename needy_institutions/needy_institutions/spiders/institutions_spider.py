@@ -16,12 +16,10 @@ class needyDivi(scrapy.Spider):
       for result in _list:
         name = result.css('.text_resultado_ib a::text').extract_first()
         address = result.css('.text_endereco_ib ::text').extract_first()
+        if name is not None and address is not None :
+          name = unidecode(name.strip())
+          address = unidecode(address.strip())
         self.my_list.append({'name': name, 'address': address})
-      for item in self.my_list:
-        if item['name'] is not None and item['address'] is not None :
-          item['name'] = unidecode(item['name'].strip())
-          item['address'] = unidecode(item['address'].strip())
-
     
       self.my_list = filter(self.myFunc, self.my_list)
       print(self.Remove(self.my_list))
